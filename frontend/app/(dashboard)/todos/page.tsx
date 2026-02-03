@@ -32,7 +32,7 @@ export default function TodosPage() {
 
   const fetchTodos = async () => {
     try {
-      const response = await api.get("/todos/");
+      const response = await api.get("/todos");
       setTodos(response.data);
     } catch (err) {
       console.error(err);
@@ -45,7 +45,7 @@ export default function TodosPage() {
     if (!newTodoTitle.trim()) return;
     setIsSubmitting(true);
     try {
-      const response = await api.post("/todos/", {
+      const response = await api.post("/todos", {
         title: newTodoTitle,
         description: newTodoDesc,
       });
