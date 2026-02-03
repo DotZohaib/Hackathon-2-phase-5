@@ -1,4 +1,13 @@
-from dapr.clients import DaprClient
+try:
+    from dapr.clients import DaprClient
+except ImportError:
+    # Mock DaprClient for Vercel environment where Dapr sidecar is not available
+    class DaprClient:
+        def __enter__(self): return self
+        def __exit__(self, exc_type, exc_value, traceback): pass
+        def publish_event(self, *args, **kwargs):
+            logger.info(f"MOCK PUBLISH: {kwargs}")
+
 import json
 import logging
 
@@ -22,4 +31,5 @@ def publish_event(topic: str, data: dict, event_type: str = "com.hackathon.event
             logger.info(f"Published event to {topic}: {data}")
     except Exception as e:
         logger.error(f"Failed to publish event to {topic}: {e}")
-        raise e
+        # raise e  <-- Suppress error in Vercel to allow app to run
+
