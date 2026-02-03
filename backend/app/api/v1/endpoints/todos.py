@@ -11,7 +11,7 @@ from app.schemas.todo import TodoCreate, TodoRead, TodoUpdate
 
 router = APIRouter()
 
-@router.post("/", response_model=TodoRead)
+@router.post("", response_model=TodoRead)
 def create_todo(
     *,
     session: Session = Depends(get_session),
@@ -28,7 +28,7 @@ def create_todo(
     session.refresh(todo)
     return todo
 
-@router.get("/", response_model=List[TodoRead])
+@router.get("", response_model=List[TodoRead])
 def read_todos(
     session: Session = Depends(get_session),
     skip: int = 0,

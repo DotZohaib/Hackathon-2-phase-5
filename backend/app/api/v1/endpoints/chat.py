@@ -17,7 +17,7 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     response: str
 
-@router.post("/", response_model=ChatResponse)
+@router.post("", response_model=ChatResponse)
 def chat_with_ai(
     request: ChatRequest,
     session: Session = Depends(get_session),
