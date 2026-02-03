@@ -31,8 +31,21 @@ else:
 @app.on_event("startup")
 def on_startup():
     # Tables already exist in Neon database - disable auto-create to avoid conflicts
-    # create_db_and_tables()
+    try:
+        create_db_and_tables()
+    except Exception as e:
+        print(f"Error creating tables: {e}")
     pass
+
+from fastapi import Request
+from fastapi.responses import JSONResponse
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    return JSONResponse(
+        status_code=500,
+        content={"detail": f"Internal Server Error: {str(exc)}", "type": type(exc).__name__},
+    )
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
