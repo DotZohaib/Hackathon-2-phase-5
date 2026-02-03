@@ -3,7 +3,7 @@ from pydantic import ConfigDict
 
 class AISettings(BaseSettings):
     GEMINI_API_KEY: str
-    GEMINI_MODEL: str = "models/gemini-flash-latest"  # Latest flash model
+    GEMINI_MODEL: str = "gemini-1.5-flash"  # Latest flash model
 
     model_config = ConfigDict(
         env_file=".env",

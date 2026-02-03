@@ -18,7 +18,8 @@ class Settings:
             "http://localhost:3000",
             "http://localhost:8000",
             "http://127.0.0.1:3000",
-            "https://hackathonfinal.vercel.app"
+            "https://hackathonfinal.vercel.app",
+            "https://hackathonfinal-ecru.vercel.app"
         ]
 
 settings = Settings()
