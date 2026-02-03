@@ -14,12 +14,11 @@ class Settings:
     if raw_origins:
         BACKEND_CORS_ORIGINS: list = [origin.strip() for origin in raw_origins.split(",")]
     else:
-        BACKEND_CORS_ORIGINS: list = [
-            "http://localhost:3000",
-            "http://localhost:8000",
-            "http://127.0.0.1:3000",
-            "https://hackathonfinal.vercel.app",
-            "https://hackathonfinal-ecru.vercel.app"
-        ]
+    raw_origins = os.getenv("BACKEND_CORS_ORIGINS")
+    if raw_origins:
+        BACKEND_CORS_ORIGINS: list = [origin.strip() for origin in raw_origins.split(",")]
+    else:
+        # Allow all origins for Hackathon/Vercel deployment flexibility
+        BACKEND_CORS_ORIGINS: list = ["*"]
 
 settings = Settings()
