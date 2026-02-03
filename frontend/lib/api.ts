@@ -1,9 +1,7 @@
 import axios from "axios";
 
-const appURL = "https://hackathonfinal-ecru.vercel.app";
-
 const api = axios.create({
-  baseURL: appURL ? `${appURL}/api/v1` : "/api/v1",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "/api/v1",
   headers: {
     "Content-Type": "application/json",
   },
@@ -31,7 +29,7 @@ api.interceptors.response.use(
         if (refreshToken) {
           // Note: Since we are using standard axios for retry, be handled carefully to avoid loops
           // Here we use a separate instance or direct call to avoid interceptor loop if refresh fails 401
-          const baseURL = appURL ? `${appURL}/api/v1` : "/api/v1";
+          const baseURL = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
           const response = await axios.post(`${baseURL}/auth/refresh`, null, {
             params: { refresh_token: refreshToken },
           });
