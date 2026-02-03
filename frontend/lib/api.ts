@@ -1,7 +1,11 @@
 import axios from "axios";
 
+const baseURL = process.env.NEXT_PUBLIC_API_URL || "/api/v1";
+
+console.log("API Base URL:", baseURL);
+
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "/api/v1",
+  baseURL: baseURL,
   headers: {
     "Content-Type": "application/json",
   },
@@ -12,6 +16,9 @@ api.interceptors.request.use(
     const token = localStorage.getItem("access_token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      console.log("Adding auth token to request:", config.url);
+    } else {
+      console.warn("No access token found for request:", config.url);
     }
     return config;
   },
