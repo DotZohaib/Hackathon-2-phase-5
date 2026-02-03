@@ -35,9 +35,13 @@ export default function SignupPage() {
       router.push("/login");
     } catch (err: any) {
       console.error(err);
-      setError(
-        err.response?.data?.detail || "Signup failed. Please try again."
-      );
+      const errorMessage =
+        err.response?.data?.detail ||
+        (err.response
+          ? `Error ${err.response.status}: ${JSON.stringify(err.response.data)}`
+          : err.message) ||
+        "Signup failed. Please try again.";
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

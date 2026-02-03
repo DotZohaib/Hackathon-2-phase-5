@@ -38,4 +38,11 @@ app.include_router(api_router, prefix=settings.API_V1_STR)
 
 @app.get("/")
 def root():
-    return {"message": "Welcome to Todo API Phase II"}
+    try:
+        from app.db.session import engine
+        from sqlmodel import Session, select
+        with Session(engine) as session:
+            session.exec(select(1)).first()
+        return {"message": "Welcome to Todo API Phase II", "database": "connected"}
+    except Exception as e:
+        return {"message": "Welcome to Todo API Phase II", "database": "error", "detail": str(e)}
