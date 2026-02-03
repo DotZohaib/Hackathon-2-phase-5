@@ -10,6 +10,10 @@ class Settings:
     ALGORITHM: str = os.getenv("ALGORITHM", "HS256")
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     DATABASE_URL: str = os.getenv("DATABASE_URL")
-    BACKEND_CORS_ORIGINS: list = ["http://localhost:3000", "http://localhost:8000", "http://127.0.0.1:3000"]
+    raw_origins = os.getenv("BACKEND_CORS_ORIGINS")
+    if raw_origins:
+        BACKEND_CORS_ORIGINS: list = [origin.strip() for origin in raw_origins.split(",")]
+    else:
+        BACKEND_CORS_ORIGINS: list = ["http://localhost:3000", "http://localhost:8000", "http://127.0.0.1:3000"]
 
 settings = Settings()
